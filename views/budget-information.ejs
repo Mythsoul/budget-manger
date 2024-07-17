@@ -1,0 +1,78 @@
+<%- include('partials/header', { title: 'Budget Information' }) %>
+<%- include('partials/sidebar', { title: 'Budget Information' }) %>
+
+<section class="page-title">
+    <h1>Here you can set your budget information.</h1>
+</section>
+<div class="budget-info-main">
+    <form action="/dashboard" class="budget-info-form" method="post"> 
+        <label for="total_amount">Total Amount</label>
+        <input type="text" name="total_amount" id="Total-Amount" class="Total-Amount" name = "total_amount" required>
+        
+        <label for="amount_to_save">Amount to Save</label>
+        <input type="text" name="amount_to_save" id="Amount-to-save" name = "amount_to_save" required>
+        
+        <label for="weekly_limit">Weekly Limit</label>
+        <input type="text" name="weekly_limit" id="Weekly-Expense-limit" name = "weekly_limit"required>
+        
+        <label for="monthly_limit">Monthly Limit</label>
+        <input type="text" name="monthly_limit" id="Monthly-Expense-limit" name = "monthly_limit "required>
+        
+        <button type="submit" class="submit-btn">Submit</button>
+    </form>
+    <style>
+    .page-title h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.budget-info-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.budget-info-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px solid blue; 
+    
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.budget-info-form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: black;
+}
+
+.budget-info-form input {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.budget-info-form .submit-btn {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.budget-info-form .submit-btn:hover {
+    background-color: #218838;
+}
+    </style>
+</div>
+<script></script>
+<%- include('partials/footer') %>

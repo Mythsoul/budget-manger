@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Tracker Dashboard</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Budget Tracker</h2>
+                <h3>Dashboard</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="/dashboard">Dashboard</a></li>
+                    <li><a href="/dashboard/tips">Tips</a></li>
+                    <li><a href="/dashboard/budget-update">Budget Update</a></li>
+                    <li><a href="/dashboard/help">Help</a></li>
+                    <li><a href="/dashboard/integrations">Integrations</a></li>
+                </ul>
+                <h3>SAVED REPORTS</h3>
+                <ul>
+                    <li><a href="/dashboard/current-month-expenses">Current Month Expenses</a></li>
+                    <li><a href="/dashboard/last-month-expenses">Last Month Expenses</a></li>
+                    <li><a href="/dashboard/budget-update">Budget Update</a></li>
+                    <li><a href="/dashboard/help-with-budget">Help with Budget</a></li>
+                </ul>
+                <ul>
+                    <li><a href="/dashboard/settings">Settings</a></li>
+                    <li><a href="/dashboard/sign-out">Sign Out</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header class="header">
+                <h1>Dashboard</h1>
+                <div class="actions">
+                    <button>Share</button>
+                    <button>Export</button>
+                    <button>This Week</button>
+                </div>
+            </header>
+            <section class="content">
+                <canvas id="myChart"></canvas>
+            </section>
+            
+        </main>
+    </div>
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                datasets: [{
+                    label: 'Expenses',
+                    data: [' 19, 21, 20, 22, 21, 18'],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

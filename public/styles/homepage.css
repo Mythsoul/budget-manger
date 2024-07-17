@@ -1,0 +1,297 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: hsl(0, 0%, 98%);
+    color: #333;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;                                  
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;                  
+} 
+
+
+
+.header {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.wallet-icon {
+    animation: spin 4s linear infinite;
+}
+
+.nav {
+    display: flex;
+    gap: 1rem;
+    margin-left: auto;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 1rem;
+    font-weight: 500;
+    animation: bounce 2s infinite;
+}
+
+.main {
+    flex: 1;
+}
+
+.intro-section {
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.intro-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.intro-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    animation: fadeInUp 1s ease-out;
+}
+
+.intro-text {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 1.5s ease-out;
+}
+
+.intro-buttons .btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-right: 0.5rem;
+    transition: background-color 0.3s;
+}
+
+.btn.primary {
+    background: #007bff;
+    color: #fff;
+    animation: pulse 2s infinite;
+}
+
+.btn.primary:hover {
+    background: #0056b3;
+}
+
+.btn.secondary {
+    background: #6c757d;
+    color: #fff;
+}
+
+.btn.secondary:hover {
+    background: #495057;
+}
+
+.features-section, .testimonials-section, .about-section, .contact-section {
+    padding: 2rem 1rem;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.section-text {
+    font-size: 1rem;
+    color: #666;
+    
+}
+
+.features {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.feature {
+    text-align: center;
+    max-width: 300px;
+    margin-bottom: 1.5rem;
+}
+
+.feature-icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 0.5rem;
+}
+
+.feature-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.feature-text {
+    font-size: 1rem;
+    color: #666;
+}
+
+.testimonials {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.testimonial {
+    max-width: 300px;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.avatar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.avatar-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.avatar-info {
+    text-align: left;
+}
+
+.avatar-name {
+    font-weight: bold;
+}
+
+.avatar-role {
+    font-size: 0.875rem;
+    color: #666;
+}
+
+.testimonial-text {
+    font-size: 1rem;
+    color: #666;
+}
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.about-image {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 1rem;
+}
+
+.about-features {
+    list-style: none;
+    padding: 0;
+}
+
+.about-feature-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.about-feature-text {
+    font-size: 1rem;
+    color: #666;
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-input, .form-textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+}
+
+.form-textarea {
+    height: 150px;
+    resize: none;
+}
+
+.footer {
+    background: #f1f1f1;
+    padding: 1rem;
+    text-align: center;
+}
+
+.footer-text {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.footer-nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.footer-link {
+    text-decoration: none;
+    color: #333;
+    font-size: 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
