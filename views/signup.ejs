@@ -1,73 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles/signup.css">
-  <title>Register</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Manager : Register</title>
+    <link rel="stylesheet" href="styles/signup.css">
 </head>
 <body>
-  <div id="app" class="container">
-    <div class="card">
-      <div class="header">
-        <h1>Create your account</h1>
-        <p>
-          Already have an account? 
-          <a href="/login">Sign in</a>
-        </p>
-      </div>
-      <form class="form" id="register-form" action="/register" method="post">
-        <div class="form-group">
-          <label for="registerusername" >Full Name</label>
-          <input id="name"  name = "registerusername" type="text" required placeholder="Your full name">
+    <div class="container">
+        <div class="register-container">
+            <h1 class="title">Budget Manager</h1>
+            <div class="register-content">
+                <div class="social-register">
+                    <button class="btn facebook"><a href="/auth/facebook">Register with Facebook</a></button>
+                    <button class="btn twitter"><a href="/auth/twitter">Register with Twitter</a></button>
+                    <button class="btn google"><a href="/auth/google">Register with Google+</a></button>
+                </div>
+                <div class="divider">OR</div>
+                <div class="manual-register">
+                    <form action="/register" method="post">
+                        <input type="text" name="registerusername" placeholder="Username" required>
+                        <input type="email" name="registeremail" placeholder="Email" required>
+                        <input type="password" name="registerpassword" placeholder="Password" required>
+                        <input type="password" name="registercpassword" placeholder="Confirm Password" required>
+                        <button type="submit" class="btn register">REGISTER</button>
+                        <div class="links">
+                            <a href="/login">Already have an account? Login</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-          <label for="registeremail">Email address</label>
-          <input id="email" type="email"  name = "registeremail" required placeholder="name@example.com">
-        </div>
-        <div class="form-group">
-          <label for="registerpassword">Password</label>
-          <input id="password" type="password" name = "registerpassword" required placeholder="Create a password">
-          <div class="tooltip">Password must be at least 8 characters long</div>
-        </div>
-        <div class="form-group">
-          <label for="registercpassword">Confirm Password</label>
-          <input id="confirm-password" type="password" name = "registercpassword" required placeholder="Confirm your password">
-        </div>
-        <button type="submit" class="btn">Register</button>
-      </form>
-      <div class="dark-mode-toggle">
-        <button id="toggle-dark-mode">
-          <svg id="moon-icon" class="icon hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-          </svg>
-          <svg id="x-icon" class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 6 6 18" />
-            <path d="m6 6 12 12" />
-          </svg>
-        </button>
-      </div>
     </div>
-  </div>
-  <script>
-    document.getElementById('toggle-dark-mode').addEventListener('click', function() {
-  const app = document.getElementById('app');
-  const headers = document.querySelectorAll('.header');
-  const inputs = document.querySelectorAll('input');
-  const card = document.querySelector('.card');
-  const moonIcon = document.getElementById('moon-icon');
-  const xIcon = document.getElementById('x-icon');
-
-  app.classList.toggle('dark-mode');
-  card.classList.toggle('dark-mode');
-  headers.forEach(header => header.classList.toggle('dark-mode'));
-  inputs.forEach(input => input.classList.toggle('dark-mode'));
-  moonIcon.classList.toggle('hidden');
-  xIcon.classList.toggle('hidden');
-});
-
-
-
-  </script>
 </body>
 </html>

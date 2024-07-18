@@ -1,6 +1,96 @@
 <%- include('partials/header', { title: 'Help' }) %>
-<%- include('partials/sidebar' , {title : 'Help'}) %>
-<section class="content">
-    <p>Here you can manage your integrations.</p>
+<%- include('partials/sidebar', { title: 'Help' }) %>
+
+
+<style> 
+  .container{
+    margin-top: 100px;  
+    margin-bottom: 100px;
+  }
+  .page-title {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  .page-title h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+  .page-title p {
+    font-size: 18px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .container button {
+    display: block;
+    margin: 0 auto;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  details {
+      margin-bottom: 1em;
+      padding: 0.5em;
+      border: 1px solid hsl(0, 0%, 80%);
+      border-radius: 5px;
+      width: 50%;
+      margin: 0 auto;
+    }
+
+    summary {
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    summary:hover {
+      color: #007bff;
+    }
+</style>
+<section class="page-title">
+    <div class="container">
+        <h1 class="mt-4">Help & Support</h1>
+        <p class="lead">Find answers to common questions and get support for your budgeting needs.</p>
+    </div>
 </section>
+<div class="container">
+ 
+                    <details>
+                        <summary>What is a budget?</summary>
+                        <p>A budget is a financial plan that outlines your income, expenses, and savings goals.</p>
+                    </details>
+             
+            <details>
+                <summary>
+                    How do I set up a budget?
+                </summary>
+                <p>
+                    To set up a budget, you can use the <a href="/dashboard/budget-update">Budget Update</a> page.
+                </p>
+            </details>
+            <details>
+                <summary>
+                    How do I track expenses?
+                </summary>
+                <p>
+                    To track expenses, you can use the <a href="/dashboard/saved-reports/current-month-expenses">Current Month Expenses</a> page.
+                </p>
+            </details>
+            <details>
+                <summary>
+                    How do I get help?
+                </summary>
+                <p>
+                    To get help, you can use the <a href="/dashboard/help-with-budget">Help with Budget</a> page.
+                </p>
+            </details>
+            <details>
+                <summary>
+                    How do I get support?
+                </summary>
+                <p>
+                    To get support, you can use the <a href="/dashboard/help">Help</a> page.
+            </details>
+          </div>   
 <%- include('partials/footer') %>

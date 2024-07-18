@@ -1,35 +1,101 @@
-<aside class="sidebar">
-    <div class="sidebar-header">
-        <h2>Budget Tracker</h2>
-        <h3>Dashboard</h3>
-    </div>
-    <nav class="sidebar-nav">
-        <ul>
-            <li><a href="/dashboard">Dashboard</a></li>
-            <li><a href="/dashboard/tips">Tips</a></li>
-            <li><a href="/dashboard/budget-update">Budget Update</a></li>
-            <li><a href="/dashboard/help">Help</a></li>
-            <li><a href="/dashboard/integrations">Integrations</a></li>
-        </ul>
-        <h3>SAVED REPORTS</h3>
-        <ul>
-            <li><a href="/dashboard/saved-reports/current-month-expenses">Current Month Expenses</a></li>
-            <li><a href="/dashboard/saved-reports/last-month-expenses">Last Month Expenses</a></li>
-            <li><a href="/dashboard/saved-reports/budget-update">Budget Update</a></li>
-            <li><a href="/dashboard/saved-reports/help-with-budget">Help with Budget</a></li>
-        </ul>
-        <ul>
-            <li><a href="/dashboard/settings">Settings</a></li>
-            <li><a href="/signout">Sign Out</a></li>
-        </ul>
-    </nav>
-</aside>
-<main class="main-content">
-    <header class="header">
-        <h1><%= title %></h1>
-        <div class="actions">
-            <button>Share</button>
-            <button>Export</button>
-            <button>This Week</button>
-        </div>
-    </header>
+<!-- partials/sidebar.ejs -->
+
+<style>
+    /* Sidebar styles */
+    .sidebar {
+        width: 250px;
+        height: 100%;
+        background-color: #333;
+        color: white;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        transform: translateX(0);
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        padding-top: 20px;
+    }
+    .sidebar ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        flex-grow: 1;
+    }
+    .sidebar h2, .sidebar h5 {
+        text-align: center;
+        margin: 20px 0;
+    }
+    .sidebar a {
+        display: block;
+        padding: 15px 20px;
+        color: white;
+        text-decoration: none;
+        transition: background-color 0.3s ease, border-radius 0.3s ease;
+        margin: 5px 15px;
+        border-radius: 5px;
+    }
+    .sidebar a:hover, .sidebar a.active {
+        background-color: #575757;
+    }
+    .sidebar a.active {
+        background-color: #444;
+    }
+    @media (max-width: 768px) {
+        .sidebar {
+            transform: translateX(-250px); /* Hide sidebar off-screen on smaller screens */
+        }
+        .sidebar.active {
+            transform: translateX(0);
+        }
+    }
+    .toggle-btn {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        background-color: #333;
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        z-index: 1001;
+        border-radius: 5px;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        display: none;
+    }
+    .toggle-btn:hover {
+        background-color: #444;
+        transform: scale(1.1);
+    }
+</style>
+
+<div id="sidebar" class="sidebar">
+    <h2>Budget Manager</h2>
+    <ul>
+        <li><a href="/dashboard" class="<%= title === 'Dashboard' ? 'active' : '' %>">Dashboard</a></li>
+        <li><a href="/dashboard/tips" class="<%= title === 'Tips' ? 'active' : '' %>">Tips</a></li>
+        <li><a href="/dashboard/budget-update" class="<%= title === 'Budget Update' ? 'active' : '' %>">Budget Update</a></li>
+        <li><a href="/dashboard/help" class="<%= title === 'Help' ? 'active' : '' %>">Help</a></li>
+        <li><a href="/dashboard/integrations" class="<%= title === 'Integrations' ? 'active' : '' %>">Integrations</a></li>
+        <h5>Saved Reports</h5>
+        <li><a href="/dashboard/saved-reports/current-month-expenses" class="<%= title === 'Current Month Expenses' ? 'active' : '' %>">Current Month Expenses</a></li>
+        <li><a href="/dashboard/saved-reports/last-month-expenses" class="<%= title === 'Last Month Expenses' ? 'active' : '' %>">Last Month Expenses</a></li>
+        <li><a href="/dashboard/saved-reports/budget-update" class="<%= title === 'Budget Update' ? 'active' : '' %>">Budget Update</a></li>
+        <li><a href="/dashboard/saved-reports/help-with-budget" class="<%= title === 'Help with Budget' ? 'active' : '' %>">Help with Budget</a></li>
+        <li><a href="/dashboard/settings" class="<%= title === 'Settings' ? 'active' : '' %>">Settings</a></li>
+        <li><a href="/logout">Sign Out</a></li>
+    </ul>
+</div>
+
+<button class="toggle-btn">☰</button>
+
+<script>
+    // JavaScript for toggling sidebar on smaller screens
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleBtn = document.querySelector('.toggle-btn');
+        toggleBtn.onclick = function () {
+            document.getElementById('sidebar').classList.toggle('active');
+        };
+    });
+</script>

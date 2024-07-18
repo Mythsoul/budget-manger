@@ -1,78 +1,119 @@
-<%- include('partials/header', { title: 'Budget Information' }) %>
-<%- include('partials/sidebar', { title: 'Budget Information' }) %>
+<%- include('partials/header', { title: 'Budget Update' }) %>
+<%- include('partials/sidebar', { title: 'Budget Update' }) %>
+
+<style>
+    /* Reset and base styles */
+body, h1, p, form, input, label, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Container */
+.container {
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+/* Typography */
+h1 {
+    font-size: 2.5rem;
+    margin-top: 1rem;
+}
+
+p.lead {
+    font-size: 1.25rem;
+}
+
+/* Form styles */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+button.btn {
+    display: inline-block;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+button.btn:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+/* Additional utility styles */
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+</style>
 
 <section class="page-title">
-    <h1>Here you can set your budget information.</h1>
+    <div class="container">
+        <h1 class="mt-4">Update Your Budget</h1>
+        <p class="lead">Keep your budget up-to-date to manage your finances better.</p>
+    </div>
 </section>
-<div class="budget-info-main">
-    <form action="/dashboard" class="budget-info-form" method="post"> 
-        <label for="total_amount">Total Amount</label>
-        <input type="text" name="total_amount" id="Total-Amount" class="Total-Amount" name = "total_amount" required>
+<div class="container">
+    <form action="/dashboard/budget-update" method="post" class="budget-info-form">
+        <div class="form-group">
+            <label for="total_amount">Total Amount</label>
+            <input type="text" name="total_amount" id="Total-Amount" class="form-control" required>
+        </div>
         
-        <label for="amount_to_save">Amount to Save</label>
-        <input type="text" name="amount_to_save" id="Amount-to-save" name = "amount_to_save" required>
+        <div class="form-group">
+            <label for="amount_to_save">Amount to Save</label>
+            <input type="text" name="amount_to_save" id="Amount-to-save" class="form-control" required>
+        </div>
         
-        <label for="weekly_limit">Weekly Limit</label>
-        <input type="text" name="weekly_limit" id="Weekly-Expense-limit" name = "weekly_limit"required>
+        <div class="form-group">
+            <label for="weekly_limit">Weekly Limit</label>
+            <input type="text" name="weekly_limit" id="Weekly-Expense-limit" class="form-control" required>
+        </div>
         
-        <label for="monthly_limit">Monthly Limit</label>
-        <input type="text" name="monthly_limit" id="Monthly-Expense-limit" name = "monthly_limit "required>
+        <div class="form-group">
+            <label for="monthly_limit">Monthly Limit</label>
+            <input type="text" name="monthly_limit" id="Monthly-Expense-limit" class="form-control" required>
+        </div>
         
-        <button type="submit" class="submit-btn">Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-    <style>
-    .page-title h1 {
-    text-align: center;
-    margin-top: 20px;
-}
 
-.budget-info-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 20px;
-}
-
-.budget-info-form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 400px;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px solid blue; 
-    
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.budget-info-form label {
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: black;
-}
-
-.budget-info-form input {
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.budget-info-form .submit-btn {
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 16px;
-}
-
-.budget-info-form .submit-btn:hover {
-    background-color: #218838;
-}
-    </style>
+    <div>
+        <p>
+            <%= error ? error : 'Enter your budget details in the form above' %>
+        </p>
+    </div>
 </div>
-<script></script>
+
 <%- include('partials/footer') %>

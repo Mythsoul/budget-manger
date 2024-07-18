@@ -1,6 +1,18 @@
 <%- include('partials/header', { title: 'Integrations' }) %>
-<%- include('partials/sidebar' , {title : 'Integrations'}) %>
-<section class="content">
-    <p>Here you can manage your integrations.</p>
+<%- include('partials/sidebar', { title: 'Integrations' }) %>
+
+<section class="page-title content">
+    <div class="container">
+        <h1 class="mt-4">Integrations</h1>
+        <p class="lead">Connect your budget manager with other tools and services you use.</p>
+    </div>
 </section>
+<div class="container">
+    <ul class="list-group mt-4">
+        <li class="list-group-item">Connect with your bank account for automatic transaction updates.</li>
+        <li class="list-group-item">Integrate with your favorite financial apps for seamless data exchange.</li>
+        <li class="list-group-item">Use our API to build custom integrations tailored to your needs.</li>
+    </ul>
+</div>
+
 <%- include('partials/footer') %>

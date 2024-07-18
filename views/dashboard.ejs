@@ -3,75 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Budget Tracker Dashboard</title>
+    <title>Budget Manager Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles/dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="container">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h2>Budget Tracker</h2>
-                <h3>Dashboard</h3>
-            </div>
-            <nav class="sidebar-nav">
-                <ul>
-                    <li><a href="/dashboard">Dashboard</a></li>
-                    <li><a href="/dashboard/tips">Tips</a></li>
-                    <li><a href="/dashboard/budget-update">Budget Update</a></li>
-                    <li><a href="/dashboard/help">Help</a></li>
-                    <li><a href="/dashboard/integrations">Integrations</a></li>
-                </ul>
-                <h3>SAVED REPORTS</h3>
-                <ul>
-                    <li><a href="/dashboard/current-month-expenses">Current Month Expenses</a></li>
-                    <li><a href="/dashboard/last-month-expenses">Last Month Expenses</a></li>
-                    <li><a href="/dashboard/budget-update">Budget Update</a></li>
-                    <li><a href="/dashboard/help-with-budget">Help with Budget</a></li>
-                </ul>
-                <ul>
-                    <li><a href="/dashboard/settings">Settings</a></li>
-                    <li><a href="/dashboard/sign-out">Sign Out</a></li>
-                </ul>
-            </nav>
-        </aside>
-        <main class="main-content">
-            <header class="header">
-                <h1>Dashboard</h1>
-                <div class="actions">
-                    <button>Share</button>
-                    <button>Export</button>
-                    <button>This Week</button>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 d-none d-md-block bg-dark sidebar">
+                <div class="sidebar-sticky">
+                    <h2 class="text-white text-center my-4">Budget Manager</h2>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/dashboard/tips">Tips</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/dashboard/budget-update">Budget Update</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/dashboard/help">Help</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/dashboard/integrations">Integrations</a>
+                        </li>
+                    </ul>
+                    <h5 class="text-white mt-4">Saved Reports</h5>
+                    <ul class="nav flex-column mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/dashboard/saved-reports/current-month-expenses">Current Month Expenses</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/dashboard/saved-reports/last-month-expenses">Last Month Expenses</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/dashboard/saved-reports/budget-update">Budget Update</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/dashboard/saved-reports/help-with-budget">Help with Budget</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/dashboard/settings">Settings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/logout">Sign Out</a>
+                        </li>
+                    </ul>
                 </div>
-            </header>
-            <section class="content">
-                <canvas id="myChart"></canvas>
-            </section>
-            
-        </main>
+                </nav>  
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2 align-items-center justify-content-center text-center">Dashboard</h1>
+                    </div>  
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Welcome back, <%= user.username %></h5>
+                                <p class="card-text">Total Income: <%= budget_information.total_income %></p>
+                                <p class="card-text">Total Expenses: <%= budget_information.total_expenses %></p>
+                                <p class="card-text">Net Balance: <%= budget_information.net_balance %></p>
+                                <p class="card-text">Current Savings: <%= budget_information.current_savings %></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Budget Summary</h5>
+                                <p class="card-text">Groceries: $800 / $1,000</p>
+                                <p class="card-text">Rent: $1,000 / $1,000</p>
+                                <p class="card-text">Utilities: $200 / $500</p>
+                                <p class="card-text">Entertainment: $150 / $200</p>
+                                <p class="card-text">Remaining Budget: $250</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 mb-4">
+                        <canvas id="expenseBreakdownChart"></canvas>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Recent Transactions</h5>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Category</th>
+                                            <th>Amount</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>2023-04-15</td>
+                                            <td>Groceries</td>
+                                            <td>$123</td>
+                                            <td>Grocery shopping at Safeway</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2023-04-10</td>
+                                            <td>Rent</td>
+                                            <td>$1,200</td>
+                                            <td>Monthly rent payment</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2023-04-05</td>
+                                            <td>Utilities</td>
+                                            <td>$176</td>
+                                            <td>Electricity bill</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2023-04-01</td>
+                                            <td>Entertainment</td>
+                                            <td>$45</td>
+                                            <td>Movie tickets</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <button class="btn btn-primary">Add Transaction</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
     </div>
-    <script>
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-                datasets: [{
-                    label: 'Expenses',
-                    data: [' 19, 21, 20, 22, 21, 18'],
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+    <script >
+        document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('expenseBreakdownChart').getContext('2d');
+    const expenseBreakdownChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Groceries', 'Rent', 'Utilities', 'Entertainment'],
+            datasets: [{
+                label: 'Expenses',
+                data: [800, 1000, 200, 150],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'right'
                 }
             }
-        });
+        }
+    });
+});
+
     </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

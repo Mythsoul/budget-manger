@@ -1,6 +1,19 @@
 <%- include('partials/header', { title: 'Saved Budget Update' }) %>
-<%- include('partials/sidebar' , {title : 'Saved Budget Update'}) %>
-<section class="content">
-    <p>Here is your saved budget update.</p>
+<%- include('partials/sidebar', { title: 'Saved Budget Update' }) %>
+
+<section class="page-title">
+    <div class="container">
+        <h1 class="mt-4">Saved Budget Update</h1>
+        <p class="lead">View and manage your saved budget updates.</p>
+    </div>
 </section>
+<div class="container">
+    <ul class="list-group mt-4">
+        <li class="list-group-item">Total Budget: $5000</li>
+        <li class="list-group-item">Amount to Save: $1000</li>
+        <li class="list-group-item">Weekly Limit: $500</li>
+        <li class="list-group-item">Monthly Limit: $2000</li>
+    </ul>
+</div>
+
 <%- include('partials/footer') %>

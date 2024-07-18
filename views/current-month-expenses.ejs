@@ -1,6 +1,30 @@
 <%- include('partials/header', { title: 'Current Month Expenses' }) %>
-<%- include('partials/sidebar' , {title : 'Current Month Expenses'}) %>
-<section class="content">
-    <p>Here are your current month expenses.</p>
+<%- include('partials/sidebar', { title: 'Current Month Expenses' }) %>
+
+<section class="page-title">
+    <div class="container">
+        <h1 class="mt-4">Current Month Expenses</h1>
+        <p class="lead">Review your expenses for the current month.</p>
+    </div>
 </section>
+<div class="container">
+    <table class="table table-bordered mt-4">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Example row -->
+            <tr>
+                <td>2024-07-01</td>
+                <td>Groceries</td>
+                <td>$150</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
 <%- include('partials/footer') %>

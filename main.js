@@ -21,7 +21,13 @@ import {
     renderSignOut,
     postRenderRegister,
     postLogin,
-    postRenderDashboard,
+    
+    authgithub, 
+    authgoogle, 
+    googlecallbackurl,
+    githubcallbackurl,
+
+    postrenderbudgetupdate
 } from "./scripts/handler.js";
 dotenv.config();
 
@@ -46,14 +52,21 @@ app.use(pauth.session());
 
 // Routes
 app.get("/", renderHomepage);
+// auth routes
+
 app.get("/register", renderRegister);
-app.post("/register", postRenderRegister);
 app.get("/login", renderLogin);
-app.post("/login", postLogin);
+
+// oauth routes
+app.get("/auth/google", authgoogle);
+app.get("/auth/google/dashboard", googlecallbackurl);
+
+app.get("/auth/github", authgithub);
+app.get("/auth/github/dashboard", githubcallbackurl);
 
 // Protected Routes
 app.get("/dashboard", ensureAuthenticated, renderDashboard);
-app.post("/dashboard", ensureAuthenticated, postRenderDashboard);
+
 app.get("/dashboard/tips", ensureAuthenticated, renderTips);
 app.get("/dashboard/budget-update", ensureAuthenticated, renderBudgetUpdate);
 app.get("/dashboard/help", ensureAuthenticated, renderHelp);
@@ -64,11 +77,12 @@ app.get("/dashboard/saved-reports/budget-update", ensureAuthenticated, renderSav
 app.get("/dashboard/saved-reports/help-with-budget", ensureAuthenticated, renderHelpWithBudget);
 app.get("/dashboard/settings", ensureAuthenticated, renderSettings);
 app.get("/signout", ensureAuthenticated, renderSignOut);
-app.get("/auth/google", pauth.authenticate("google", { scope: ["profile", "email"] }));
-app.get("/auth/google/dashboard", pauth.authenticate("google", 
-    { successRedirect: "/dashboard",
-     failureRedirect: "/login" 
-    }));
+
+
+// post routes 
+app.post("/login", postLogin);
+app.post("/register", postRenderRegister);
+app.post("/dashboard/budget-update", postrenderbudgetupdate);
 
 
 

@@ -1,6 +1,43 @@
-<%- include('partials/header', { title: 'Help' }) %>
-<%- include('partials/sidebar' , {title : 'Help'}) %>
-<section class="content">
-    <p>Here you can find help and support.</p>
+<%- include('partials/header', { title: 'Help with Budget' }) %>
+<%- include('partials/sidebar', { title: 'Help with Budget' }) %>
+
+<section class="page-title">
+    <div class="container">
+        <h1 class="mt-4">Help with Budget</h1>
+        <p class="lead">Get assistance with managing your budget.</p>
+    </div>
 </section>
+<div class="container">
+    <div class="accordion mt-4" id="helpWithBudgetAccordion">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        How to adjust your budget?
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#helpWithBudgetAccordion">
+                <div class="card-body">
+                    Adjust your budget by reviewing your expenses and reallocating funds where necessary. Use our tools to make the process easier.
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        How to stay on track with your budget?
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#helpWithBudgetAccordion">
+                <div class="card-body">
+                    Stay on track by regularly checking your spending against your budget. Use alerts and reminders to avoid overspending.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <%- include('partials/footer') %>

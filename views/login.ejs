@@ -1,67 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles/signin.css">
-  <title>Sign In</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login : Budget Manager</title>
+    <link rel="stylesheet" href="styles/signin.css">
 </head>
 <body>
-  <div id="app" class="container">
-    <div class="card">
-      <div class="header">
-        <h1 class="welcome-back">Welcome Back ! </h1>
-        <h1>Sign in to your account</h1>
-        <p>
-          Don't have an account? 
-          <a href="/register">Sign up</a>
-        </p>
-      </div>
-      <form class="form" action="/login" method="post">
-        <div class="form-group">
-          <label for="username">Email address or username</label>
-          <input id="email" type="text" name = "username"  required placeholder="name@example.com or username">
+    <div class="container">
+        <div class="login-container">
+            <h1 class="title">Budget Manager</h1>
+            <div class="login-content">
+                <div class="social-login">
+                    <button class="btn facebook"><a href="/auth/facebook">Login with Facebook</a></button>
+                    <button class="btn twitter"><a href="/auth/github">Login with Twitter</a></button>
+                    <button class="btn google"><a href="/auth/google">Login with Google+</a></button>
+                </div>
+                <div class="divider">OR</div>
+                <div class="manual-login">
+                    <form action="/login" method="post">
+                        <input type="text" name="username" placeholder="Username or email" required>
+                        <input type="password" name="password" placeholder="Password" required>
+                        <div class="options">
+                            <label>
+                                <input type="checkbox" name="remember"> Remember me
+                            </label>
+                            <button type="submit" class="btn login">LOGIN</button>
+                        </div>
+                        <div class="links">
+                            <a href="/register">Register now</a> | <a href="/forgot-password">Forgot password?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-          <div class="label-link">
-            <label for="password" name = "password">Password</label>
-            <a href="#">Forgot password?</a>
-          </div>
-          <input id="password" name = "password" type="password" autocomplete="current-password" required placeholder="Enter your password">
-        </div>
-        <button type="submit" class="btn">Sign in</button>
-      </form>
-      <div class="dark-mode-toggle">
-        <button id="toggle-dark-mode">
-          <svg id="moon-icon" class="icon hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-          </svg>
-          <svg id="x-icon" class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 6 6 18" />
-            <path d="m6 6 12 12" />
-          </svg>
-        </button>
-      </div>
     </div>
-  </div>
-  <script>
- document.getElementById('toggle-dark-mode').addEventListener('click', function() {
-  const app = document.getElementById('app');
-  const headers = document.querySelectorAll('header'); // Note the plural 'headers'
-  const inputs = document.querySelectorAll('input');
-  const card = document.querySelector('.card');
-  const moonIcon = document.getElementById('moon-icon');
-  const xIcon = document.getElementById('x-icon');
-
-  app.classList.toggle('dark-mode');
-  card.classList.toggle('dark-mode');
-  headers.forEach(header => header.classList.toggle('white')); // Loop over each header element
-  inputs.forEach(input => input.classList.toggle('dark-mode'));
-  moonIcon.classList.toggle('hidden');
-  xIcon.classList.toggle('hidden');
-});
-
-
-  </script>
 </body>
 </html>
