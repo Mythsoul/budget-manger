@@ -21,14 +21,15 @@ import {
     renderSignOut,
     postRenderRegister,
     postLogin,
-    
-    authgithub, 
-    authgoogle, 
-    googlecallbackurl,
-    githubcallbackurl,
-
-    postrenderbudgetupdate
+    authGithub,
+    authGoogle,
+    googleCallbackUrl,
+    githubCallbackUrl,
+    postRenderBudgetUpdate,
+    getTransactionData,
+    delete_route
 } from "./scripts/handler.js";
+
 dotenv.config();
 
 const app = express();
@@ -49,24 +50,21 @@ app.use(session({
 app.use(pauth.initialize());
 app.use(pauth.session());
 
-
 // Routes
 app.get("/", renderHomepage);
 // auth routes
-
 app.get("/register", renderRegister);
 app.get("/login", renderLogin);
 
 // oauth routes
-app.get("/auth/google", authgoogle);
-app.get("/auth/google/dashboard", googlecallbackurl);
+app.get("/auth/google", authGoogle);
+app.get("/auth/google/dashboard", googleCallbackUrl);
 
-app.get("/auth/github", authgithub);
-app.get("/auth/github/dashboard", githubcallbackurl);
+app.get("/auth/github", authGithub);
+app.get("/auth/github/dashboard", githubCallbackUrl);
 
 // Protected Routes
 app.get("/dashboard", ensureAuthenticated, renderDashboard);
-
 app.get("/dashboard/tips", ensureAuthenticated, renderTips);
 app.get("/dashboard/budget-update", ensureAuthenticated, renderBudgetUpdate);
 app.get("/dashboard/help", ensureAuthenticated, renderHelp);
@@ -78,13 +76,14 @@ app.get("/dashboard/saved-reports/help-with-budget", ensureAuthenticated, render
 app.get("/dashboard/settings", ensureAuthenticated, renderSettings);
 app.get("/signout", ensureAuthenticated, renderSignOut);
 
-
 // post routes 
 app.post("/login", postLogin);
 app.post("/register", postRenderRegister);
-app.post("/dashboard/budget-update", postrenderbudgetupdate);
+app.post("/dashboard/budget-update", postRenderBudgetUpdate);
+app.post("/get_transactions", getTransactionData);
 
-
+// Edit and delete Routes
+app.get("/dashboard/delete", ensureAuthenticated, delete_route);
 
 // Function to check if the user is authenticated
 function ensureAuthenticated(req, res, next) {
@@ -94,7 +93,6 @@ function ensureAuthenticated(req, res, next) {
         res.redirect('/login');
     }
 }
-
 
 // Start server
 app.listen(port, () => {

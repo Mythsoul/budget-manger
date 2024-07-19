@@ -1,14 +1,20 @@
 import bcrypt from "bcrypt";
-import { db } from "./database.js";
 import passport from "passport";
-import { Strategy } from "passport-local";
 import { pauth } from "./authentication.js";
-const saltRounds = 10;
-
+import {
+    hashPasswordAndInsertUser,
+    checkHashedPassword,
+    getUserBudget,
+    getUserData,
+    insertBudgetData,
+    get_transactions,
+    renderTransactionData, 
+    calculateTotalTransactionAmount,
+    getHighestIncome,
+    get_incomes,
+} from "./functions.js";
+import {db} from "./database.js";
 // Middleware and route handlers
-
-
-
 
 export const renderHomepage = (req, res) => {
     res.render("homepage.ejs");
@@ -18,17 +24,15 @@ export const renderRegister = (req, res) => {
     res.render("signup.ejs");
 };
 
-// oauth routes /////////////////
+// OAuth routes
 
-//google routes
-export const authgoogle = pauth.authenticate("google" , {scope : ["profile", "email"]});
-export const googlecallbackurl = pauth.authenticate("google", { successRedirect: "/dashboard", failureRedirect: "/login" });
+// Google routes
+export const authGoogle = pauth.authenticate("google", { scope: ["profile", "email"] });
+export const googleCallbackUrl = pauth.authenticate("google", { successRedirect: "/dashboard", failureRedirect: "/login" });
 
-// github routes 
-
-export const authgithub = pauth.authenticate("github");
-export const githubcallbackurl = pauth.authenticate("github", { successRedirect: "/dashboard", failureRedirect: "/login" });
-
+// GitHub routes
+export const authGithub = pauth.authenticate("github");
+export const githubCallbackUrl = pauth.authenticate("github", { successRedirect: "/dashboard", failureRedirect: "/login" });
 
 export const renderLogin = (req, res) => {
     const errorMessage = req.query.error ? req.query.error.replace(/\+/g, ' ') : null;
@@ -48,28 +52,10 @@ export const postRenderRegister = async (req, res) => {
     if (registercpassword !== registerpassword) {
         return res.status(400).send("Passwords do not match");
     }
-
     try {
-        const hashpassword = await bcrypt.hash(registerpassword, saltRounds);
-        console.log("Successfully hashed the password");
-
-        const result = await db.query(
-            "INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *",
-            [registerusername, registeremail, hashpassword]
-        );
-
-        const user = result.rows[0];
-
-        req.login(user, (err) => {
-            if (err) {
-                console.error("Error while registering:", err);
-                return res.status(500).send("Internal server error");
-            }
-            res.redirect("/dashboard");
-        });
-    } catch (error) {
-        console.error("Error during registration:", error);
-        res.status(500).json({ message: "Internal server error" });
+        await hashPasswordAndInsertUser(req, res, registerusername, registeremail, registerpassword);
+    } catch (err) {
+        console.log(err);
     }
 };
 
@@ -80,38 +66,55 @@ export const postLogin = passport.authenticate("local", {
     failWithError: true
 });
 
+export const renderDashboard = async (req, res) => {
+    if (req.isAuthenticated()) {
+        const user = req.user;
+        try {
+            const budget_information = await getUserBudget(user.id);
+            const highest_income = await getHighestIncome(user.id);
+            const transaction_data = await renderTransactionData(user.id);
 
+            if (!budget_information) {
+                console.log('No budget information found for user:', user.username);
+                return res.render("dashboard.ejs", { user, budget_information: {}, transactions: [], highest_income });
+            }
 
+            console.log('Budget information:', budget_information);
+            if (!transaction_data) {
+                console.log('No transaction data found for user:', user.username);
+            }
+            res.render("dashboard.ejs", { user, budget_information, transactions: transaction_data, highest_income });
 
-export const renderDashboard = async(req, res) => {
-   if(req.isAuthenticated()){
-       const user = req.user;
-       const get_budget_data = await db.query("SELECT * from budgets WHERE user_id = $1" , [req.user.id]); ; 
-       const budget_information = await get_budget_data.rows[0];
-       console.log(budget_information); 
-       res.render("dashboard.ejs" , { user  , budget_information });
-
-   }else{
-       res.redirect("/login");
-   }
-   
+        } catch (error) {
+            console.error('Error fetching budget data:', error);
+            res.status(500).send('Internal server error');
+        }
+    } else {
+        res.redirect("/login");
+    }
 };
-
-
 
 export const renderTips = (req, res) => {
     res.render("tips.ejs");
 };
 
-export const renderBudgetUpdate = (req, res) => {
+export const renderBudgetUpdate = async(req, res) => {
+try{
+    const userid = req.user.id; 
+    const income = await get_incomes(userid); 
+    console.log(income); 
+    // delete_amount = income[];
+    // const delte_amount = await db.query("SELECT total_income FROM budgets WHERE user_id = $1 and total_income = $2 ", [userid , delete_amount]);
     const error = req.query.error ? req.query.error.replace(/\+/g, ' ') : null;
-
-    res.render("budget-information.ejs" , {error});
+    res.render("budget-information.ejs", { error  , income , userid});
+}catch(err){
+    console.log(err);
+}
 };
 
 export const renderSavedBudgetUpdate = (req, res) => {
-       res.render("saved-budget-update.ejs");
-} 
+    res.render("saved-budget-update.ejs");
+};
 
 export const renderHelp = (req, res) => {
     res.render("help.ejs");
@@ -129,42 +132,46 @@ export const renderLastMonthExpenses = (req, res) => {
     res.render("last-month-expenses.ejs");
 };
 
-export const postrenderbudgetupdate=async(req, res) => {
-    console.log(req.body); 
-    try{ 
-        if(req.isAuthenticated()){
-        
-        const {total_amount , amount_to_save , weekly_limit , monthly_limit } = req.body;
-        const result = await db.query("select * from users where username = $1" , [req.user.username.trim()]); 
+export const postRenderBudgetUpdate = async (req, res) => {
+    console.log(req.body);
+    try {
+        if (req.isAuthenticated()) {
+            const { total_amount} = req.body;
+            const net_balance = total_amount; 
+            const user_id = req.user.id;
 
-        const user_id = result.rows[0].id; 
-        console.log("user id "  + user_id); 
-    
-        const check_userid_limit = await db.query("select * from budgets where user_id = $1" , [user_id]);
-        if(check_userid_limit.rows.length >5){
-           return res.redirect("/dashboard/budget-update?error=You+have+reached+the+maximum+limit+of+budget+updates. Kindly+delete+some+of+them+to+add+more+")
+            const check_userid_limit = await db.query("SELECT * FROM budgets WHERE user_id = $1", [user_id]);
+            if (check_userid_limit.rows.length > 5) {
+                return res.redirect("/dashboard/budget-update?error=You+have+reached+the+maximum+limit+of+budget+updates.+Kindly+delete+some+of+them+to+add+more");
+            }
+
+            await insertBudgetData(user_id, total_amount , net_balance);
+            console.log("Successfully inserted budget details");
+
+            res.redirect("/dashboard");
+        } else {
+            res.redirect("/login");
         }
-        const insert_budget = await db.query("INSERT INTO budgets (user_id , total_income , total_expenses, net_balance , current_savings ) VALUES ($1 , $2 , $3 , $4 , $5) RETURNING * ",[user_id , total_amount , amount_to_save , weekly_limit , monthly_limit]); 
-        await console.log("SUCESSFULLY INSERTED BUDGET DETAILS");    
- 
-        res.redirect("/dashboard");
-    }else{
-res.redirect("/login")
-        }
-    }catch(err){
-        console.log(err)
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Internal server error");
     }
 };
 
 export const renderHelpWithBudget = (req, res) => {
     res.render("help-with-budget.ejs");
-}; 
+};
+
 export const renderSettings = (req, res) => {
     res.render("settings.ejs");
 };
 
-
-
+export const getTransactionData = async (req, res) => {
+    const user_id = req.user.id;
+    console.log("Transaction data:" + req.body);
+    const {description , amount , date , category} = req.body;
+    await get_transactions(req , res ,user_id , date , category , amount , description);
+};
 
 export const renderSignOut = (req, res) => {
     req.logout((err) => {
@@ -175,3 +182,16 @@ export const renderSignOut = (req, res) => {
         res.redirect("/");
     });
 };
+
+
+export const delete_route = async (req, res) => {
+        const incomeId = req.query.id;
+        
+        try {
+            await db.query("DELETE  FROM budgets WHERE user_id  = $1", [incomeId]);
+            res.redirect("/dashboard/budget-update?success=true");
+        } catch (err) {
+            console.error("Error while deleting income:", err.stack);
+            res.redirect("/dashboard/budget-update?error=Error+deleting+income");
+        }
+    }

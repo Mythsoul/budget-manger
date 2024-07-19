@@ -76,6 +76,11 @@ button.btn:hover {
     margin-top: 1.5rem;
 }
 
+.current-incomes {
+    margin-top: 50px;
+    text-align: center; 
+    
+    }
 </style>
 
 <section class="page-title">
@@ -90,30 +95,25 @@ button.btn:hover {
             <label for="total_amount">Total Amount</label>
             <input type="text" name="total_amount" id="Total-Amount" class="form-control" required>
         </div>
-        
-        <div class="form-group">
-            <label for="amount_to_save">Amount to Save</label>
-            <input type="text" name="amount_to_save" id="Amount-to-save" class="form-control" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="weekly_limit">Weekly Limit</label>
-            <input type="text" name="weekly_limit" id="Weekly-Expense-limit" class="form-control" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="monthly_limit">Monthly Limit</label>
-            <input type="text" name="monthly_limit" id="Monthly-Expense-limit" class="form-control" required>
-        </div>
-        
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
     <div>
+
         <p>
             <%= error ? error : 'Enter your budget details in the form above' %>
         </p>
     </div>
+</div>
+<div class="current-incomes">
+    <h1>Your current incomes</h1>
+    <% income.forEach((incomes) => { %>
+       <ul>
+           <li>
+               <%= incomes ? incomes : 0 %> <button type="button" class="btn btn-primary"><a href="/dashboard/delete?id=<%=userid%>">Delete</a></button>
+           </li> 
+       </ul>
+    <% }) %>
 </div>
 
 <%- include('partials/footer') %>

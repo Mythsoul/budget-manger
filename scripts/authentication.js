@@ -8,8 +8,9 @@ import OAuth from "oauth";
 import GitHubStrategy from "passport-github2"
 dotenv.config();
 
+// FOr authentication 
 
-passport.use(new LocalStrategy(async function verify(username, password, cb) {
+passport.use("local" , new LocalStrategy(async function verify(username, password, cb) {
     try {
         // Log the username for debugging
         console.log('Username:', username, 'Password:', password);

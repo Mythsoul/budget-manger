@@ -53,20 +53,20 @@
                         </li>
                     </ul>
                 </div>
-                </nav>  
+            </nav>
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2 align-items-center justify-content-center text-center">Dashboard</h1>
-                    </div>  
+                </div>
                 <div class="row">
                     <div class="col-md-6 mb-4">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">Welcome back, <%= user.username %></h5>
-                                <p class="card-text">Total Income: <%= budget_information.total_income %></p>
-                                <p class="card-text">Total Expenses: <%= budget_information.total_expenses %></p>
-                                <p class="card-text">Net Balance: <%= budget_information.net_balance %></p>
-                                <p class="card-text">Current Savings: <%= budget_information.current_savings %></p>
+                                <p class="card-text">Total Income: <%= highest_income ? highest_income : 0 %></p>
+                                <p class="card-text">Total Expenses: <%= budget_information.total_expenses ? budget_information.total_expenses : 0 %></p>
+                                <p class="card-text">Net Balance: <%= budget_information.net_balance ? budget_information.net_balance : 0 %></p>
+                                <p class="card-text">Current Savings: <%= budget_information.current_savings ? budget_information.current_savings : 0 %></p>
                             </div>
                         </div>
                     </div>
@@ -103,33 +103,19 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>2023-04-15</td>
-                                            <td>Groceries</td>
-                                            <td>$123</td>
-                                            <td>Grocery shopping at Safeway</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2023-04-10</td>
-                                            <td>Rent</td>
-                                            <td>$1,200</td>
-                                            <td>Monthly rent payment</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2023-04-05</td>
-                                            <td>Utilities</td>
-                                            <td>$176</td>
-                                            <td>Electricity bill</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2023-04-01</td>
-                                            <td>Entertainment</td>
-                                            <td>$45</td>
-                                            <td>Movie tickets</td>
-                                        </tr>
+                                        <% transactions.forEach((transaction) => { %>
+                                            <tr>
+                                                <td><%= transaction.date ? transaction.date.toISOString().split('T')[0] : "N/A" %></td>
+                                                <td><%= transaction.category ? transaction.category : "N/A" %></td>
+                                                <td><%= transaction.amount ? transaction.amount : "N/A" %></td>
+                                                <td><%= transaction.description ? transaction.description : "N/A" %></td>
+                                            </tr>
+                                        <% }) %>
                                     </tbody>
                                 </table>
-                                <button class="btn btn-primary">Add Transaction</button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTransactionModal">
+                                    Add Transaction
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -137,44 +123,81 @@
             </main>
         </div>
     </div>
-    <script >
-        document.addEventListener('DOMContentLoaded', function() {
-    const ctx = document.getElementById('expenseBreakdownChart').getContext('2d');
-    const expenseBreakdownChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: ['Groceries', 'Rent', 'Utilities', 'Entertainment'],
-            datasets: [{
-                label: 'Expenses',
-                data: [800, 1000, 200, 150],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'right'
-                }
-            }
-        }
-    });
-});
+    <div class="modal fade" id="addTransactionModal" tabindex="-10" role="dialog" aria-labelledby="addTransactionModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addTransactionModalLabel">Add Transaction</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="transactionForm" action="/get_transactions" method="POST">
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <input type="text" class="form-control" id="description" name="description" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">Amount</label>
+                            <input type="number" class="form-control" id="amount" name="amount" required>
+                        </div>
+          <div class="form-group">
+      <label for="category">Category</label>
+     <input type="text" class="form-control" name="category" id="category" required>
+       </div>
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" class="form-control" id="date" name="date" required>
+                        </div>
+                        <!-- Add more form fields as needed -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save Transaction</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('expenseBreakdownChart').getContext('2d');
+            const expenseBreakdownChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Groceries', 'Rent', 'Utilities', 'Entertainment'],
+                    datasets: [{
+                        label: 'Expenses',
+                        data: [800, 1000, 200, 150],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'right'
+                        }
+                    }
+                }
+            });
+        });
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

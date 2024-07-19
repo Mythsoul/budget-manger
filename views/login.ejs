@@ -35,5 +35,16 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const sumbit_button = document.querySelector(".login");
+        document.addEventListener("keypress" , (key)=>{ 
+        var pressed_key = this.event.key; 
+       if(pressed_key == "Enter"){
+           sumbit_button.click();
+       }
+       return; 
+        });
+    </script>
 </body>
 </html>
