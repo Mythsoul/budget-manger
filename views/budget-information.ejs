@@ -106,14 +106,8 @@ button.btn:hover {
     </div>
 </div>
 <div class="current-incomes">
-    <h1>Your current incomes</h1>
-    <% income.forEach((incomes) => { %>
-       <ul>
-           <li>
-               <%= incomes ? incomes : 0 %> <button type="button" class="btn btn-primary"><a href="/dashboard/delete?id=<%=userid%>">Delete</a></button>
-           </li> 
-       </ul>
-    <% }) %>
+    <h1>Your current income</h1>
+    <li><%= income %></li>
 </div>
 
 <%- include('partials/footer') %>

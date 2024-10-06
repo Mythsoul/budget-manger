@@ -3,120 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Budget Tracker</title>
+    <title>Budget App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="styles/homepage.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="stars"></div>
-    <div class="container">
-        <header class="header">
-            <a href="#" class="logo">
-                <img src="path/to/mountain-icon.svg" alt="Mountain Icon" class="icon">
-                <span class="title">Budget Tracker</span>
-            </a>
-            <nav class="nav">
-                <a href="#" class="nav-link">Products</a>
-                <a href="#" class="nav-link">About</a>
-                <a href="#" class="nav-link">Testimonials</a>
-                <a href="#" class="nav-link">Contact</a>
-            </nav>
-            <button class="btn secondary"> <a href="/register">Get Started</a></button>
-        </header>
-
-        <main>
-            <section class="intro">
-                <h1 class="intro-title">Welcome to Budget Tracker</h1>
-                <p class="intro-text">We are a company that provides innovative solutions to help you achieve your financial goals.</p>
-                <button class="btn primary">Learn More</button>
-            </section>
-
-            <section class="video-section">
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-            </section>
-
-            <section class="products">
-                <div class="products-image">
-                    <img src="path/to/placeholder.svg" alt="Product" class="product-img">
-                </div>
-                <div class="products-info">
-                    <h2 class="section-title">Our Products</h2>
-                    <p class="section-text">Discover our innovative products that can help you manage your finances.</p>
-                    <div class="btn-group">
-                        <button class="btn primary">Learn More</button>
-                        <button class="btn secondary">Buy Now</button>
-                    </div>
-                </div>
-            </section>
-
-            <section class="testimonials">
-                <div class="testimonials-info">
-                    <h2 class="section-title">What Our Customers Say</h2>
-                    <p class="section-text">Hear from our satisfied customers and see how our products have helped them.</p>
-                    <button class="btn primary">Read More</button>
-                </div>
-                <div class="testimonial-card">
-                    <div class="card-header">
-                        <div class="user-icon-container">
-                            <img src="path/to/user-icon.svg" alt="User Icon" class="user-icon">
-                        </div>
-                        <div>
-                            <h3 class="user-name">John Doe</h3>
-                            <p class="user-role">CEO, Acme Inc.</p>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <p>"Budget Tracker has been a game-changer for our business. Their products have helped us streamline our finances and increase our efficiency."</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="cta-section">
-                <h2 class="cta-title">Ready to Get Started?</h2>
-                <p class="cta-text">Sign up now and experience the power of our solutions.</p>
-                <button class="btn primary">Get Started</button>
-            </section>
-
-            <section class="faq">
-                <h2 class="section-title">FAQ</h2>
-                <p class="section-text">Frequently asked questions about our products and services.</p>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <h3>What is Budget Tracker?</h3>
-                        <img src="path/to/chevron-down-icon.svg" alt="Chevron Down Icon" class="chevron-icon">
-                    </button>
-                    <div class="faq-answer">
-                        <p>Budget Tracker is a comprehensive financial management platform that helps individuals and businesses track their income, expenses, and savings. Our innovative solutions provide you with the tools and insights you need to achieve your financial goals.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <h3>How does Budget Tracker work?</h3>
-                        <img src="path/to/chevron-down-icon.svg" alt="Chevron Down Icon" class="chevron-icon">
-                    </button>
-                    <div class="faq-answer">
-                        <p>Budget Tracker integrates with your bank accounts and credit cards to automatically track your income and expenses. You can categorize your transactions, set budgets, and receive personalized insights to help you make informed financial decisions.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <h3>What are the benefits of using Budget Tracker?</h3>
-                        <img src="path/to/chevron-down-icon.svg" alt="Chevron Down Icon" class="chevron-icon">
-                    </button>
-                    <div class="faq-answer">
-                        <p>By using Budget Tracker, you can gain better control over your finances, reduce debt, and achieve your financial goals. Our platform provides real-time insights, personalized recommendations, and tools to help you save money and invest wisely.</p>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <footer class="footer">
-            <div class="footer-links">
-                <a href="#" class="footer-link">Resources</a>
-                <a href="#" class="footer-link">Contact</a>
+    <div id="loader" class="loader"></div>
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Budget App</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#feedback">Feedback</a>
+                    </li>
+                </ul>
             </div>
-        </footer>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container d-flex flex-column flex-lg-row align-items-center justify-content-between py-5">
+            <div class="hero-text">
+                <h1 class="display-4">Take Control of Your <span class="typed">Finance</span></h1>
+                <p class="lead">Our budget management app helps you track expenses, create budgets, and gain insights to reach your financial goals.</p>
+                <a href="/register" class="btn btn-primary">Get Started</a>
+            </div>
+            <div class="hero-video">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="row">
+                <h2 class="text-center mb-4">Features</h2>
+                <div class="col-md-4">
+                        
+                    <div class="feature">
+                        
+                        <h3>Expense Tracking</h3>
+                        <p>Easily track your expenses and categorize them to better understand your spending habits.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature">
+                        <h3>Budgeting</h3>
+                        <p>Create customizable budgets and monitor your progress to stay on top of your finances.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature">
+                        <h3>Reporting</h3>
+                        <p>Generate detailed reports to gain insights into your spending and identify areas for improvement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+
+    <!-- Feedback Section -->
+    <section id="feedback" class="feedback">
+        <div class="container">
+            <h2>What Our Users Say</h2>
+            <div class="feedback-item">
+                <blockquote>
+                    <p>"This budget app has been a game-changer for me. It's helped me stay on top of my expenses and reach my financial goals with ease."</p>
+                    <footer>— Jane Doe, Financial Analyst</footer>
+                </blockquote>
+            </div>
+            <div class="feedback-item">
+                <blockquote>
+                    <p>"I was struggling to keep track of my business expenses until I started using this budget app. It's made managing my finances so much easier."</p>
+                    <footer>— John Smith, Small Business Owner</footer>
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+     <!-- Contact Form Section -->
+<section id="contact" class="contact-form">
+    <div class="container">
+        <h2 class="text-center mb-4">Contact Us</h2>
+        <form>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Your Name">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" placeholder="Your Email">
+            </div>
+            <div class="mb-3">
+                <label for="message" class="form-label">Message</label>
+                <textarea class="form-control" id="message" rows="3" placeholder="Your Message"></textarea>
+            </div>
+            <button type="submit" class="btn blue ">Send</button>
+        </form>
     </div>
+</section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Budget App. All rights reserved.</p>
+            <div class="social-media">
+                <a href="https://www.facebook.com" aria-label="Facebook">
+                    <svg width="24" height="24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 5.06 3.83 9.2 8.74 9.9V15.6h-2.6v-3h2.6v-2.2c0-2.57 1.51-3.98 3.74-3.98 1.08 0 2.22.2 2.22.2v2.4h-1.5c-1.48 0-1.94.92-1.94 1.86V12h3.2l-.4 3h-2.8v6.3C17.14 21.95 21 17.87 21 12c0-5.52-4.48-10-10-10z"></path></svg>
+                </a>
+                <a href="https://twitter.com" aria-label="Twitter">
+                    <svg width="24" height="24" fill="currentColor"><path d="M23.43 4.83c-.81.36-1.68.61-2.6.72.93-.56 1.64-1.44 1.98-2.49-.87.52-1.83.9-2.85 1.1-.82-.87-1.99-1.41-3.29-1.41-2.49 0-4.51 2.03-4.51 4.53 0 .35.04.7.1 1.03-3.75-.19-7.09-1.98-9.32-4.7-.39.67-.61 1.45-.61 2.29 0 1.58.81 2.98 2.03 3.79-.75-.03-1.46-.23-2.08-.58v.06c0 2.21 1.56 4.06 3.63 4.48-.38.1-.77.16-1.17.16-.29 0-.57-.03-.85-.08.58 1.81 2.27 3.13 4.27 3.16-1.57 1.23-3.55 1.95-5.71 1.95-.37 0-.74-.02-1.1-.06 2.06 1.32 4.5 2.09 7.12 2.09 8.54 0 13.21-7.08 13.21-13.21 0-.2-.01-.4-.02-.6.91-.65 1.71-1.47 2.34-2.41z"></path></svg>
+                </a>
+                <a href="https://www.instagram.com/" target="_blank" aria-label="Instagram">
+                    <svg width="24" height="24" fill="currentColor"><path d="M12 2.16c-3.34 0-6.02 2.68-6.02 6.01 0 3.33 2.68 6.01 6.02 6.01 3.33 0 6.01-2.68 6.01-6.01 0-3.33-2.68-6.01-6.01-6.01zm0 10.08c-2.26 0-4.08-1.82-4.08-4.08 0-2.26 1.82-4.08 4.08-4.08 2.26 0 4.08 1.82 4.08 4.08 0 2.26-1.82 4.08-4.08 4.08zm6.7-8.56c-.45 0-.87.18-1.18.48-.31.31-.48.73-.48 1.18s.18.87.48 1.18c.31.31.73.48 1.18.48s.87-.18 1.18-.48c.31-.31.48-.73.48-1.18s-.18-.87-.48-1.18c-.31-.31-.73-.48-1.18-.48zm1.51 13.06c0 .46-.16.89-.48 1.21-.31.32-.74.48-1.2.48h-11.5c-.46 0-.89-.16-1.21-.48-.32-.32-.48-.74-.48-1.21v-11.5c0-.46.16-.89.48-1.21.32-.31.74-.48 1.21-.48h11.5c.46 0 .89.16 1.2.48.31.32.48.74.48 1.21v11.5z"></path></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('load', () => {
+            document.getElementById('loader').style.display = 'none';
+        });
+        // Typed.js Initialization
+        document.addEventListener('DOMContentLoaded', function () {
+            var typed = new Typed('.typed', {
+                strings: ["Budget Manager", "Budget Tracker"],
+                typeSpeed: 80,
+                backSpeed: 80,
+                loop: true
+            });
+        });
+            
+    </script>
+    
 </body>
 </html>

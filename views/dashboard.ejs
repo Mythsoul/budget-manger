@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Budget Manager Dashboard</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -74,11 +75,9 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">Budget Summary</h5>
-                                <p class="card-text">Groceries: $800 / $1,000</p>
-                                <p class="card-text">Rent: $1,000 / $1,000</p>
-                                <p class="card-text">Utilities: $200 / $500</p>
-                                <p class="card-text">Entertainment: $150 / $200</p>
-                                <p class="card-text">Remaining Budget: $250</p>
+                                <% budget_summary.forEach(budget => { %>
+                                 <p class="card-text"><%= budget.category %>: $<%= budget.amount %></p>
+                                <% }) %>
                             </div>
                         </div>
                     </div>
@@ -144,7 +143,13 @@
                         </div>
           <div class="form-group">
       <label for="category">Category</label>
-     <input type="text" class="form-control" name="category" id="category" required>
+     <select name="category" id="category">
+         <option value="Groceries">Groceries</option>
+         <option value="Rent">Rent</option>
+         <option value="Utilities">Utilities</option>
+         <option value="Entertainment">Entertainment</option>
+         <option value="Other">Other</option>
+     </select>
        </div>
                         <div class="form-group">
                             <label for="date">Date</label>
@@ -170,7 +175,7 @@
                     labels: ['Groceries', 'Rent', 'Utilities', 'Entertainment'],
                     datasets: [{
                         label: 'Expenses',
-                        data: [800, 1000, 200, 150],
+                        data: [1000 , 1000, 200, 150],
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
                             'rgba(54, 162, 235, 0.2)',

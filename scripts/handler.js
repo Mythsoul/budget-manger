@@ -9,11 +9,13 @@ import {
     insertBudgetData,
     get_transactions,
     renderTransactionData, 
-    calculateTotalTransactionAmount,
-    getHighestIncome,
-    get_incomes,
+    get_total_transactions,
+    deletetotalincome,
+    get_user_income,
+    renderbudgetsummary,
 } from "./functions.js";
-import {db} from "./database.js";
+import { db } from "./database.js";
+
 // Middleware and route handlers
 
 export const renderHomepage = (req, res) => {
@@ -71,9 +73,9 @@ export const renderDashboard = async (req, res) => {
         const user = req.user;
         try {
             const budget_information = await getUserBudget(user.id);
-            const highest_income = await getHighestIncome(user.id);
             const transaction_data = await renderTransactionData(user.id);
-
+            const highest_income = await get_total_transactions(user.id);
+            const budget_summary = await renderbudgetsummary(user.id);
             if (!budget_information) {
                 console.log('No budget information found for user:', user.username);
                 return res.render("dashboard.ejs", { user, budget_information: {}, transactions: [], highest_income });
@@ -83,7 +85,7 @@ export const renderDashboard = async (req, res) => {
             if (!transaction_data) {
                 console.log('No transaction data found for user:', user.username);
             }
-            res.render("dashboard.ejs", { user, budget_information, transactions: transaction_data, highest_income });
+            res.render("dashboard.ejs", { user, budget_information, budget_summary, transactions: transaction_data, highest_income });
 
         } catch (error) {
             console.error('Error fetching budget data:', error);
@@ -100,11 +102,8 @@ export const renderTips = (req, res) => {
 
 export const renderBudgetUpdate = async(req, res) => {
 try{
-    const userid = req.user.id; 
-    const income = await get_incomes(userid); 
-    console.log(income); 
-    // delete_amount = income[];
-    // const delte_amount = await db.query("SELECT total_income FROM budgets WHERE user_id = $1 and total_income = $2 ", [userid , delete_amount]);
+    const userid = req.user; 
+    const income = await get_user_income(userid.id); 
     const error = req.query.error ? req.query.error.replace(/\+/g, ' ') : null;
     res.render("budget-information.ejs", { error  , income , userid});
 }catch(err){
@@ -133,30 +132,22 @@ export const renderLastMonthExpenses = (req, res) => {
 };
 
 export const postRenderBudgetUpdate = async (req, res) => {
-    console.log(req.body);
-    try {
-        if (req.isAuthenticated()) {
-            const { total_amount} = req.body;
-            const net_balance = total_amount; 
-            const user_id = req.user.id;
 
-            const check_userid_limit = await db.query("SELECT * FROM budgets WHERE user_id = $1", [user_id]);
-            if (check_userid_limit.rows.length > 5) {
-                return res.redirect("/dashboard/budget-update?error=You+have+reached+the+maximum+limit+of+budget+updates.+Kindly+delete+some+of+them+to+add+more");
-            }
+if(req.isAuthenticated()){
+    try{ 
+        console.log(req.body); 
+        const {total_amount} = req.body; 
+        const insert_budget_data = await insertBudgetData(req.user.id,total_amount); 
+        if(insert_budget_data){ 
+            console.log("Data inserted sucessfully"); 
+            res.redirect("/dashboard"); 
 
-            await insertBudgetData(user_id, total_amount , net_balance);
-            console.log("Successfully inserted budget details");
-
-            res.redirect("/dashboard");
-        } else {
-            res.redirect("/login");
+        }else{ 
+            console.log("ah ")
         }
-    } catch (err) {
-        console.log(err);
-        res.status(500).send("Internal server error");
-    }
-};
+    } catch(err){ 
+    console.log(err);
+}}}
 
 export const renderHelpWithBudget = (req, res) => {
     res.render("help-with-budget.ejs");
@@ -167,10 +158,20 @@ export const renderSettings = (req, res) => {
 };
 
 export const getTransactionData = async (req, res) => {
-    const user_id = req.user.id;
-    console.log("Transaction data:" + req.body);
-    const {description , amount , date , category} = req.body;
-    await get_transactions(req , res ,user_id , date , category , amount , description);
+    if (req.isAuthenticated()) {
+        const user_id = req.user.id;
+        console.log("Transaction data:", req.body);
+        const { description, amount, date, category } = req.body;
+
+        // Validate that amount is a number
+        if (isNaN(amount)) {
+            return res.status(400).send("Invalid amount value");
+        }
+
+        await get_transactions(req, res, user_id, date, category, parseFloat(amount), description);
+    } else {
+        res.status(401).send("Unauthorized");
+    }
 };
 
 export const renderSignOut = (req, res) => {
@@ -183,15 +184,14 @@ export const renderSignOut = (req, res) => {
     });
 };
 
-
 export const delete_route = async (req, res) => {
-        const incomeId = req.query.id;
-        
-        try {
-            await db.query("DELETE  FROM budgets WHERE user_id  = $1", [incomeId]);
-            res.redirect("/dashboard/budget-update?success=true");
-        } catch (err) {
-            console.error("Error while deleting income:", err.stack);
-            res.redirect("/dashboard/budget-update?error=Error+deleting+income");
-        }
+    const incomeId = req.query.id;
+    
+    try {
+        await deletetotalincome(incomeId);
+        res.redirect("/dashboard/budget-update?success=true");
+    } catch (err) {
+        console.error("Error while deleting income:", err.stack);
+        res.redirect("/dashboard/budget-update?error=Error+deleting+income");
     }
+};
