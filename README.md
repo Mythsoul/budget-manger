@@ -1,3 +1,1 @@
-# Budget-tracker
-# Budgettracker2
-# Budgettracker2
+# Not working for some time so thought to make public i am fucked 
